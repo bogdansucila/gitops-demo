@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: albingress
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: "*"
+  source:
+    repoURL: 'https://aws.github.io/eks-charts'
+    targetRevision: 1.1.5
+    chart: aws-load-balancer-controller
+    helm:
+      parameters: 
+        - name: clusterName
+          value: "toptal-project"
+        - name: serviceAccount.annotations
+          value: "eks.amazonaws.com/role-arn: arn:aws:iam::110932912312:role/ALBIngressRole"
+        - name: serviceAccount.create
+          value: "true"
+        - name: serviceAccount.name
+          value: aws-load-balancer-controller
+        - name: image.repository
+          value: amazon/aws-alb-ingress-controller
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toptal-project-web
+  labels:
+    app: toptal-project-web
+spec:
+  selector:
+    matchLabels:
+      app: toptal-project-web
+  template:
+    metadata:
+      labels:
+        app: toptal-project-web
+    spec:
+      serviceAccountName: {{ .Release.Namespace }}-toptal-project-web
+      containers:
+      - name: web
+        image: "{{ .Values.images.web.repository }}/toptal-project-web:{{ .Values.images.web.version }}"
+        imagePullPolicy: {{ .Values.images.web.pullPolicy }}
+        securityContext:
+          privileged: false
+          runAsUser: 65534
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+        {{- if .Values.resources.web }}
+        {{ toYaml .Values.resources.web | indent 10 }}
+        {{- else }}
+        {{ toYaml .Values.resources.default | indent 10 }}
+        {{- end }}
+        env:
+        - name: PORT
+          value: {{ .Values.env_variables.web.port }}
+        - name: API_HOST
+          value: "toptal-project-api.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.env_variables.api.port }}"
+      {{- with .Values.tolerations }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

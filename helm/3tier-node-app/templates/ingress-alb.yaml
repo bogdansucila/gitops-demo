@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Namespace }}
+  annotations:
+    alb.ingress.kubernetes.io/group.name: toptal-project
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+  # alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificate_arn }}
+
+spec:
+  rules:
+    - host: web.{{ .Values.ingress.fqdn }}
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: toptal-project-web
+              servicePort: 8080
+    - host: api.{{ .Values.ingress.fqdn }}
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: toptal-project-api
+              servicePort: 8081

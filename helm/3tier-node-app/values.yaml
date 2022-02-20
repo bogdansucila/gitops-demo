@@ -1,0 +1,45 @@
+image:
+  api:
+    repository: 110932912312.dkr.ecr.eu-west-1.amazonaws.com
+    pullPolicy: IfNotPresent
+    version: latest
+  web:
+    repository: 110932912312.dkr.ecr.eu-west-1.amazonaws.com
+    pullPolicy: IfNotPresent
+    version: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env_variables:
+  api: 
+    port: 8081
+    db_name: ""
+    db_host: ""
+    db_port: ""
+  web:
+    port: 8080
+    api_host: ""
+secrets:
+  api:
+    rds_secret: ""
+
+ingress:
+  enabled: true
+  annotations: {}
+  fqdn: toptal-project.local
+  #certificate_arn: 
+
+resources:
+  default:
+    limits:
+      cpu: 500m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 10Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

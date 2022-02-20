@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toptal-project-api
+  labels:
+    app: toptal-project-api
+spec:
+  selector:
+    matchLabels:
+      app: toptal-project-api
+  template:
+    metadata:
+      labels:
+        app: toptal-project-api
+    spec:
+      serviceAccountName: {{ .Release.Namespace }}-toptal-project-api
+      containers:
+      - name: api
+        image: "{{ .Values.images.api.repository }}/toptal-project-api:{{ .Values.images.api.version }}"
+        imagePullPolicy: {{ .Values.images.api.pullPolicy }}
+        securityContext:
+          privileged: false
+          runAsUser: 65534
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+        {{- if .Values.resources.api }}
+        {{ toYaml .Values.resources.api | indent 10 }}
+        {{- else }}
+        {{ toYaml .Values.resources.default | indent 10 }}
+        {{- end }}
+        env:
+        - name: PORT
+          value: {{ .Values.env_variables.api.port }}
+        - name: DB
+          value: {{ .Values.env_variables.api.db_name }}
+        - name: DBHOST
+          value: {{ .Values.env_variables.api.db_host }}
+        - name: DBPORT
+          value: {{ .Values.env_variables.api.db_port }}
+        - name: DBUSER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Namespace }}-toptal-project-db-user
+              key: db_user
+        - name: DBPASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Namespace }}-toptal-project-db-pass
+              key: db_pass
+        volumeMounts:
+          - name: api-rds-secrets
+            mountPath: "/mnt/api-rds-secrets"
+            readOnly: true
+      volumes:
+      - name: api-rds-secrets
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: {{ .Release.Namespace }}-toptal-project-secrets-provider 
+      {{- with .Values.tolerations }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

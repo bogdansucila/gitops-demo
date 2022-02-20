@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 3tier-node-app-staging
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  project: staging
+  source:
+    repoURL: 'https://github.com/bogdansucila/gitops-demo.git'
+    path: 'helm/3tier-node-app'
+    helm:
+      parameters:
+        - name: env_variables.api.db_name
+          value: "api"
+        - name: env_variables.api.db_host
+          value: "staging-toptal-project-rds.cci7bfyhjfmq.eu-west-1.rds.amazonaws.com"
+        - name: env_variables.api.db_port
+          value: 5432
+  targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
