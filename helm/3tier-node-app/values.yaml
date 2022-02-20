@@ -1,4 +1,4 @@
-image:
+images:
   api:
     repository: 110932912312.dkr.ecr.eu-west-1.amazonaws.com
     pullPolicy: IfNotPresent
@@ -14,12 +14,12 @@ fullnameOverride: ""
 
 env_variables:
   api: 
-    port: 8081
+    port: "8081"
     db_name: ""
     db_host: ""
     db_port: ""
   web:
-    port: 8080
+    port: "8080"
     api_host: ""
 secrets:
   api:
@@ -32,7 +32,14 @@ ingress:
   #certificate_arn: 
 
 resources:
-  default:
+  api:
+    limits:
+      cpu: 500m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 10Mi
+  web:
     limits:
       cpu: 500m
       memory: 200Mi

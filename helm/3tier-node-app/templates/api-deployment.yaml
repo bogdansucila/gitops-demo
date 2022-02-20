@@ -35,11 +35,12 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 10
         resources:
-        {{- if .Values.resources.api }}
-        {{ toYaml .Values.resources.api | indent 10 }}
-        {{- else }}
-        {{ toYaml .Values.resources.default | indent 10 }}
-        {{- end }}
+          limits:
+            cpu: {{ .Values.resources.api.limits.cpu }}
+            memory:  {{ .Values.resources.api.limits.memory }}
+          requests:
+            cpu:  {{ .Values.resources.api.requests.cpu }}
+            memory:  {{ .Values.resources.api.requests.memory }}
         env:
         - name: PORT
           value: {{ .Values.env_variables.api.port }}
