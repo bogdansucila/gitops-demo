@@ -18,7 +18,7 @@ spec:
           value: "staging-toptal-project-rds.cci7bfyhjfmq.eu-west-1.rds.amazonaws.com"
         - name: env_variables.api.db_port
           value: 5432
-  targetRevision: HEAD
+    targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: staging
