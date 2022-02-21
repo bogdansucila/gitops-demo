@@ -53,24 +53,13 @@ spec:
         - name: DBUSER
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Namespace }}-toptal-project-db-user
-              key: db_user
+              name: {{ .Release.Namespace }}-toptal-project-rds-secrets
+              key: DBUSER
         - name: DBPASS
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Namespace }}-toptal-project-db-pass
-              key: db_pass
-        volumeMounts:
-          - name: api-rds-secrets
-            mountPath: "/mnt/api-rds-secrets"
-            readOnly: true
-      volumes:
-      - name: api-rds-secrets
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: {{ .Release.Namespace }}-toptal-project-secrets-provider 
+              name: {{ .Release.Namespace }}-toptal-project-rds-secrets
+              key: DBPASS
       {{- with .Values.tolerations }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
