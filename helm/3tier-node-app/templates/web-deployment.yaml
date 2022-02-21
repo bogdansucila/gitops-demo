@@ -43,9 +43,9 @@ spec:
             memory:  {{ .Values.resources.web.requests.memory }}
         env:
         - name: PORT
-          value: {{ .Values.env_variables.web.port | quote }}
+          value: "8080"
         - name: API_HOST
-          value: "toptal-project-api.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.env_variables.api.port | quote }}"
+          value: "toptal-project-api.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.env_variables.api.port }}"
       {{- with .Values.tolerations }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
