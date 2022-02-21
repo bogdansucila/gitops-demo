@@ -43,13 +43,13 @@ spec:
             memory:  {{ .Values.resources.api.requests.memory }}
         env:
         - name: PORT
-          value: {{ .Values.env_variables.api.port | quote }}
+          value: {{ quote .Values.env_variables.api.port }}
         - name: DB
           value: {{ .Values.env_variables.api.db_name }}
         - name: DBHOST
           value: {{ .Values.env_variables.api.db_host }}
         - name: DBPORT
-          value: {{ .Values.env_variables.api.db_port | quote }}
+          value: {{ quote .Values.env_variables.api.db_port }}
         - name: DBUSER
           valueFrom:
             secretKeyRef:
