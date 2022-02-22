@@ -13,14 +13,14 @@ metadata:
 
 spec:
   rules:
-    - host: web.{{ .Values.ingress.fqdn }}
+    - host: {{ .Release.Namespace }}-web.{{ .Values.ingress.fqdn }}
       http:
         paths:
           - path: /*
             backend:
               serviceName: toptal-project-web
               servicePort: 8080
-    - host: api.{{ .Values.ingress.fqdn }}
+    - host: {{ .Release.Namespace }}-api.{{ .Values.ingress.fqdn }}
       http:
         paths:
           - path: /*
