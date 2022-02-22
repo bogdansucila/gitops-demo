@@ -16,6 +16,10 @@ spec:
           value: "api"
         - name: env_variables.api.db_host
           value: "staging-toptal-project-rds.cci7bfyhjfmq.eu-west-1.rds.amazonaws.com"
+        - name: images.api.version
+          value: "latest"
+        - name: images.web.version
+          value: "v2"
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
