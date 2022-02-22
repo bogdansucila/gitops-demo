@@ -12,17 +12,12 @@ spec:
     targetRevision: 1.4.0
     chart: aws-load-balancer-controller
     helm:
-      parameters: 
-        - name: clusterName
-          value: "toptal-project"
-        - name: serviceAccount.annotations
-          value: "eks.amazonaws.com/role-arn: arn:aws:iam::110932912312:role/ALBIngressRole"
-        - name: serviceAccount.create
-          value: "true"
-        - name: serviceAccount.name
-          value: aws-load-balancer-controller
-        - name: image.repository
-          value: amazon/aws-alb-ingress-controller
+      values: |
+        clusterName: toptal-project
+        serviceAccount:
+          annotations: 
+            eks.amazonaws.com/role-arn: arn:aws:iam::110932912312:role/ALBIngressRole
+          name: aws-load-balancer-controller
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kube-system
