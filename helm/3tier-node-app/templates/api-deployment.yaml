@@ -22,6 +22,18 @@ spec:
         securityContext:
           privileged: false
           runAsUser: 65534
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
         resources:
           limits:
             cpu: {{ .Values.resources.api.limits.cpu }}
