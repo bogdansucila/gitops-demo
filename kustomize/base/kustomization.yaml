@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - albingress-crd.yaml
   - albingress.yaml
-  - fluentbit.yaml
