@@ -33,7 +33,7 @@ spec:
         value: 'false'
       - name: kubeApiServer.enabled
         value: 'false'
-    skipCrds: true # known issues with Prometheus CRDs
+      skipCrds: true # known issues with Prometheus CRDs
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
