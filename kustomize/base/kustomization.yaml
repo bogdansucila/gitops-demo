@@ -5,3 +5,4 @@ resources:
   - albingress-crd.yaml
   - albingress.yaml
   - fluentd.yaml
+  - prometheus.yaml

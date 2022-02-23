@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  source:
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    targetRevision: 32.2.1
+    chart: kube-prometheus-stack
+    helm:
+      parameters:
+      - name: defaultRules.rules.alertmanager
+        value: 'false'
+      - name: defaultRules.rules.kubeApiserverSlos
+        value: 'false'
+      - name: defaultRules.rules.kubePrometheusNodeRecording
+        value: 'false'
+      - name: defaultRules.rules.kubeApiserverAvailability
+        value: 'false'
+      - name: defaultRules.rules.kubelet
+        value: 'false'
+      - name: defaultRules.rules.kubernetesAbsent
+        value: 'false'
+      - name: kubeEtcd.enabled
+        value: 'false'
+      - name: kubeScheduler.enabled
+        value: 'false'
+      - name: kubeControllerManager.enabled
+        value: 'false'
+      - name: kubeApiServer.enabled
+        value: 'false'
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
