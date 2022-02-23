@@ -1,0 +1,28 @@
+server:
+  config:
+    repositories: |
+      - name: argocd
+        type: git
+        url: https://github.com/bogdansucila/gitops-demo.git
+    url: https://127.0.0.1:8080
+  additionalApplications: 
+    - project: "default"
+      name: argocd-staging
+      source:
+        repoURL: 'https://github.com/bogdansucila/gitops-demo.git'
+        path: kustomize/overlays/staging
+        targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated: {}
+    - project: "default"
+      name: argocd-production
+      source:
+        repoURL: 'https://github.com/bogdansucila/gitops-demo.git'
+        path: kustomize/overlays/production
+        targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated: {}
