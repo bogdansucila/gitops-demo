@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluentbit
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: "default"
+  source:
+    repoURL: 'https://aws.github.io/eks-charts'
+    targetRevision: 0.1.13
+    chart: aws-for-fluent-bit
+    helm:
+      parameters:
+        - name: cloudWatch.region	
+          value: eu-west-1
+        - name: cloudWatch.logGroupName	
+          value: toptal-project
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
