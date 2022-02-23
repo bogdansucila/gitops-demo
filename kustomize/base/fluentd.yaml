@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluentd
+  # You'll usually want to add your resources to the argocd namespace.
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  # The project the application belongs to.
+    project: default
+    name: "fluentd"
+    source:
+      repoURL: 'https://github.com/bogdansucila/gitops-demo.git'
+      path: 'helm/fluentd'
+      revision: HEAD
+    destination:
+      server: 'https://kubernetes.default.svc'
+      namespace: monitoring
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
