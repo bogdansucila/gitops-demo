@@ -14,9 +14,15 @@ spec:
     helm:
       parameters:
         - name: cloudWatch.region	
-          value: eu-west-1
+          value: 'eu-west-1'
         - name: cloudWatch.logGroupName	
-          value: toptal-project
+          value: 'toptal-project'
+        - name: firehose.enabled
+          value: 'false'
+        - name: kinesis.enabled
+          value: 'false'
+        - name: elasticsearch.enabled
+          value: 'false'
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: logging
