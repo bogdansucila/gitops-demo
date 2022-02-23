@@ -1,0 +1,11 @@
+# Default values for cloudwatch.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+region: ""
+
+account_name: ""
+
+cluster_name: ""
+
+image_tag: "v1.7.3-debian-cloudwatch-1.0"
