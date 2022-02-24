@@ -26,3 +26,13 @@ server:
         server: https://kubernetes.default.svc
       syncPolicy:
         automated: {}
+    - project: "default"
+      name: argocd-shared
+      source:
+        repoURL: 'https://github.com/bogdansucila/gitops-demo.git'
+        path: kustomize/base
+        targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated: {}

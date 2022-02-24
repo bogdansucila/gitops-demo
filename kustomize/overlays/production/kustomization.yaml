@@ -3,5 +3,4 @@ kind: Kustomization
 
 
 resources:
-  - ../../base
   - 3tier-node-app.yaml
