@@ -15,3 +15,7 @@ provider "kubernetes" {
   cluster_ca_certificate    = base64decode(aws_eks_cluster.primary.certificate_authority.0.data)
   token                     = data.aws_eks_cluster_auth.cluster-auth.token
 }
+
+provider "random" {
+  
+}

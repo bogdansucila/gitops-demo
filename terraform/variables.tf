@@ -2,9 +2,9 @@ variable "region" {
   type    = string
 }
 
-variable "domain_name" {
-  type    = string
-  default = "production-web.toptal-project.local"
+variable "cdn_aliases" {
+  type    = set(string)
+  default = ["production-web.toptal-project.local"]
 }
 
 /*---------------- EKS ----------------*/
