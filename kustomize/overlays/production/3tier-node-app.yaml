@@ -21,7 +21,7 @@ spec:
         - name: images.web.version
           value: "v2"
         - name: ingress.certificate_arn
-          value: "arn:aws:acm:eu-west-1:110932912312:certificate/23461c9c-7ee8-4319-a13f-6e99b8f3f6bf"
+          value: "arn:aws:acm:eu-west-1:110932912312:certificate/afbd5282-0a56-45cc-b0a9-10295ed7b4d0"
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
