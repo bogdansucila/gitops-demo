@@ -22,6 +22,8 @@ spec:
           value: "v2"
         - name: ingress.certificate_arn
           value: "arn:aws:acm:eu-west-1:110932912312:certificate/5d4bf59b-b393-429b-9bc0-181c328652ef"
+        - name: ingress.fqdn
+          value: "bogdan-dev-project.tk"
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
