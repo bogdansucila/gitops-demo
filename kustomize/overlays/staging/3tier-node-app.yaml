@@ -19,7 +19,7 @@ spec:
         - name: images.api.version
           value: "latest"
         - name: images.web.version
-          value: "v2"
+          value: "latest"
         - name: ingress.certificate_arn
           value: "arn:aws:acm:eu-west-1:110932912312:certificate/5d4bf59b-b393-429b-9bc0-181c328652ef"
         - name: ingress.fqdn
