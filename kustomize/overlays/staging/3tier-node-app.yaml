@@ -16,6 +16,10 @@ spec:
           value: "api"
         - name: env_variables.api.db_host
           value: "staging-toptal-project-rds.cci7bfyhjfmq.eu-west-1.rds.amazonaws.com"
+        - name: images.api.pullPolicy
+          value: "Always"
+        - name: images.web.pullPolicy
+          value: "Always"
         - name: images.api.version
           value: "latest"
         - name: images.web.version
